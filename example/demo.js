@@ -27,9 +27,6 @@
         editorChanged = true;
     }
 
-    //lint the initial code
-    lintCode();
-
     //lint code when it changes
     editor.on('change', lintCode);
 
@@ -61,7 +58,7 @@
         selectMode(this.value);
     };
 
-    //bing code sample handlers
+    //bind code sample handlers
     doc.getElementById('mini').onclick = function () {
         loadSample(this.href);
     };
