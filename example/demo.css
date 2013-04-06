@@ -1,0 +1,36 @@
+/* editor scope levels */
+.cm-level0 { color: #ffffff; } /* white */
+.cm-level1 { color: #aefab8; } /* green */
+.cm-level2 { color: #fafa99; } /* yellow */
+.cm-level3 { color: #a9f2ff; } /* blue */
+.cm-level4 { color: #faadba; } /* red */
+.cm-level5 { color: #c9bfff; } /* cyan */
+.cm-level6 { color: #f9b5ff; } /* magenta */
+.cm-level7 { color: #c7c7c7; } /* gray */
+.cm-level8 { color: #ffba80; } /* orange */
+
+
+/* You don't need below this line, it's just for this demo page */
+
+/* editor */
+.CodeMirror { height: auto; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; }
+
+/* code samples */
+.samples { position: absolute; top: 0; right: 0; padding: 5px; }
+a { color:#00f; }
+
+/* modes */
+label { cursor: pointer; }
+
+/* scope color legend */
+.legend span { font-size: 12px; border: solid 1px #000; padding: 2px; }
+.level0 { background-color: #ffffff; }
+.level1 { background-color: #aefab8; }
+.level2 { background-color: #fafa99; }
+.level3 { background-color: #a9f2ff; }
+.level4 { background-color: #faadba; }
+.level5 { background-color: #c9bfff; }
+.level6 { background-color: #f9b5ff; }
+.level7 { background-color: #c7c7c7; }
+.level8 { background-color: #ffba80; }

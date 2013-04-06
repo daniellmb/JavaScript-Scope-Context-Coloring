@@ -1,0 +1,6 @@
+[submodule "JSLint"]
+	path = JSLint
+	url = https://github.com/douglascrockford/JSLint.git
+[submodule "CodeMirror"]
+	path = CodeMirror
+	url = https://github.com/marijnh/CodeMirror.git

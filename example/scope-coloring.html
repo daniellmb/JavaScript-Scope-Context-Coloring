@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JavaScript Scope Context Coloring</title>
+    <link rel="stylesheet" href="../CodeMirror/lib/codemirror.css">
+    <link rel="stylesheet" href="../CodeMirror/theme/ambiance.css">
+    <link rel="stylesheet" href="demo.css">
+  </head>
+  <body>
+    <h1>JavaScript Scope Context Coloring</h1>
+    <form>
+        <div class="samples">
+        <strong>Code Samples:</strong>
+        <a href="#minimonad" id="mini">Mini Monad</a>,
+        <a href="#fullmonad" id="full">Full Monad</a>,
+        <a href="#level8" id="eight">8 Levels</a>
+        </div>
+        <input type="radio" name="mode" id="n00b" value="n00b"> <label for="n00b">Syntax Coloring</label>
+        <input type="radio" name="mode" id="grownup" value="pro" checked> <label for="grownup">Scope Coloring</label>
+        <span class="legend">
+            <span class="level0">Level 0</span>
+            <span class="level1">Level 1</span>
+            <span class="level2">Level 2</span>
+            <span class="level3">Level 3</span>
+            <span class="level4">Level 4</span>
+            <span class="level5">Level 5</span>
+            <span class="level6">Level 6</span>
+            <span class="level7">Level 7</span>
+            <span class="level8">Level 8</span>
+        </span>
+        <br>
+        <textarea id="editor"></textarea>
+    </form>
+<script id="minimonad" type="text/html">function MONAD() {
+    'use strict';
+    return function unit(value) {
+        var monad = Object.create(null);
+        monad.bind = function (func) {
+            return func(value);
+        };
+        return monad;
+    };
+}</script>
+<script id="fullmonad" type="text/html">function MONAD(modifier) {
+    'use strict';
+
+    var prototype = Object.create(null);
+    prototype.is_monad = true;
+
+    function unit(value) {
+        var monad = Object.create(prototype);
+        monad.bind = function (func, args) {
+            return func.apply(
+                undefined,
+                [value].concat(Array.prototype.slice.apply(args || []))
+            );
+        };
+        if (typeof modifier === 'function') {
+            value = modifier(monad, value);
+        }
+        return monad;
+    }
+    unit.method = function (name, func) {
+        prototype[name] = func;
+        return unit;
+    };
+    unit.lift_value = function (name, func) {
+        prototype[name] = function () {
+            return this.bind(func, arguments);
+        };
+        return unit;
+    };
+    unit.lift = function (name, func) {
+        prototype[name] = function () {
+            var result = this.bind(func, arguments);
+            return result && result.is_monad === true ? result : unit(result);
+        };
+        return unit;
+    };
+    return unit;
+}</script>
+<script id="level8" type="text/html">function Level0() {
+    'use strict';
+    return function Level1() {
+        return function Level2() {
+            return function Level3() {
+                return function Level4() {
+                    return function Level5() {
+                        return function Level6() {
+                            return function Level7() {
+                                console.warn('Seriously, 8 Levels!?');
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+}</script>
+    <script src="../CodeMirror/lib/codemirror.js"></script>
+    <script src="../CodeMirror/mode/javascript/javascript.js"></script>
+    <script src="../scope.js"></script>
+    <script src="../jslint/jslint.js"></script>
+    <script src="demo.js"></script>
+  </body>
+</html>
