@@ -1,18 +1,8 @@
-/*global CodeMirror, test*/
+/*global CodeMirror, JSLINT, test*/
 (function() {
     'use strict';
 
-    /*
-     * Mode tests are registered by calling test.mode(testName, mode,
-     * tokens), where mode is a mode object as returned by
-     * CodeMirror.getMode, and tokens is an array of lines that make up
-     * the test.
-     *
-     * These lines are strings, in which styled stretches of code are
-     * enclosed in brackets `[]`, and prefixed by their style. For
-     * example, `[keyword if]`.
-     */
-
+    //set up mocks
     var editorChanged = false,
         mockLevels = [],
         hasChangedCallCount = 0,
@@ -35,15 +25,6 @@
         },
         mode = CodeMirror.getMode({tabSize: 4}, scopeMode);
 
-
-
-
-
-
-
-
-
-
     //test helpers
     function beforeEach() {
         editorChanged = false;
@@ -52,13 +33,23 @@
         mockLevels = [];
     }
 
-    function testOutput(name, levels, output) {
-        test.mode(name, mode, output, function() {
+    function testOutput(name, levels, tokens) {
+        test.mode(name, mode, tokens, function() {
             //set to true so the levels will be looked up
             editorChanged = true;
             mockLevels = levels;
         });
     }
+
+    function testLevels(name, code, output) {
+        test.mode(name, mode, output, function() {
+            //set to true so the levels will be looked up
+            editorChanged = true;
+            JSLINT(code);
+            mockLevels = JSLINT.color(JSLINT.data());
+        });
+    }
+
     function findSingle(str, pos, ch) {
         for (;;) {
             var found = str.indexOf(ch, pos);
@@ -101,7 +92,7 @@
 
     test.mode = function(name, mode, tokens, setUp) {
         var data = parseTokens(tokens);
-        return test(mode.name + " " + name, function() {
+        return test(mode.name + " mode " + name, function() {
             beforeEach();
             if (setUp) {setUp(); }
             return compare(data.plain, data.tokens, mode);
@@ -268,7 +259,16 @@
         });
     }());
 
-    //output tests
+    /*
+     * output tests are registered by calling testOutput(testName, levels,
+     * tokens), where levels is the array returned by JSLINT.color, and
+     * tokens is an array of lines that make up the test.
+     *
+     * These lines are strings, in which styled stretches of code are
+     * enclosed in brackets `[]`, and prefixed by their style. For
+     * example, `[keyword if]`.
+     */
+
     testOutput("should apply the class name based on the level array",
         [{"line": 1, "level": 1, "from": 1, "thru": 14}],
         ["[level1 var test = 0;]"]);
@@ -287,7 +287,7 @@
         ],
         ["[level200 var]  [level300 test = 2;]"]);
 
-    testOutput("should parse MONAD",
+    testOutput("should properly tokenize MONAD",
         [
             {"line": 1, "level": 1, "from": 1, "thru": 9},
             {"line": 1, "level": 0, "from": 10, "thru": 15},
@@ -319,6 +319,60 @@
             "            [level3 return func(][level2 value][level3 );]",
             "        [level3 };]",
             "        [level2 return monad;]",
+            "    [level2 };]",
+            "[level1 }]"
+        ]
+    );
+
+    //GitHub Issue #4 (bug in JSLINT)
+    testLevels("should properly parse hoisted variables",
+        [   //input
+            "var sayHi = function() {",
+            "    console.log(late);",
+            "};",
+            "var late = 'hi';"
+        ],
+        [   //expected output
+            "[level0 var sayHi =] [level1 function() {]",
+            "    [level1 console.log(][level0 late][level1 );]",
+            "[level1 };]",
+            "[level0 var late = 'hi';]"
+        ]
+    );
+
+    //GitHub Issue #3 (bug FIXED in JSLINT)
+    testLevels("should properly parse named function expressions",
+        [   //input
+            "var foo = function bar() {",
+            "    console.log('baz');",
+            "};"
+        ],
+        [   //expected output
+            "[level0 var foo =] [level1 function bar() {]",
+            "    [level1 console.log('baz');]",
+            "[level1 };]"
+        ]
+    );
+
+    // GitHub Issue #2 (bug in JSLINT)
+    testLevels("should match variables more than once per scope",
+        [   //input
+            "var x = 10;",
+            "function level0() {",
+            "    var a = x,",
+            "        b = x;",
+            "    return function level1() {",
+            "        return x + x;",
+            "    };",
+            "}"
+        ],
+        [   //expected output
+            "[level0 var x = 10;]",
+            "[level1 function] [level0 level0][level1 () {]",
+            "    [level1 var a =] [level0 x][level1 ,]",
+            "        [level1 b =] [level0 x][level1 ;]",
+            "    [level1 return] [level2 function] [level1 level1][level2 () {]",
+            "        [level2 return] [level0 x] [level2 +] [level0 x][level2 ;]",
             "    [level2 };]",
             "[level1 }]"
         ]
