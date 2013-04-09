@@ -7,18 +7,28 @@
 .cm-level5 { color: #c9bfff; } /* cyan */
 .cm-level6 { color: #f9b5ff; } /* magenta */
 .cm-level7 { color: #c7c7c7; } /* gray */
-.cm-level8 { color: #ffba80; } /* orange */
-
+.cm-level8 { color: #ffc47d; } /* orange */
+.cm-level9 { color: #cf9369; } /* crap-brown */
 
 /* You don't need below this line, it's just for this demo page */
+
+/* sticky footer */
+html, body { height: 100%; }
+#wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -60px; }
+#push, #footer { height: 60px; }
+#footer { text-align: center; }
+.container .credit { margin: 20px 0; }
+
+/* change mode */
+#toggleMode { margin-bottom: 5px; }
+
+/* samples */
+form { position: relative; }
+.samples { position: absolute; top:3px; right:3px; z-index: 5; }
 
 /* editor */
 .CodeMirror { height: auto; }
 .CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; }
-
-/* code samples */
-.samples { position: absolute; top: 0; right: 0; padding: 5px; }
-a { color:#00f; }
 
 /* modes */
 label { cursor: pointer; }
@@ -33,7 +43,8 @@ label { cursor: pointer; }
 .level5 { background-color: #c9bfff; }
 .level6 { background-color: #f9b5ff; }
 .level7 { background-color: #c7c7c7; }
-.level8 { background-color: #ffba80; }
+.level8 { background-color: #ffc47d; }
+.level9 { background-color: #CF9369; }
 
 /* fork on github */
 #fork a {
@@ -71,10 +82,7 @@ label { cursor: pointer; }
     top: auto;
 }
 
-@media screen and (min-width:800px) {
-	.samples {
-		right:200px;
-	}
+@media screen and (min-width:767px) {
 
     #fork {
         position: absolute;
@@ -95,5 +103,12 @@ label { cursor: pointer; }
         transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
         box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
+    }
+
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }

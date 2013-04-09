@@ -1,8 +1,8 @@
-/*global document, JSLINT, CodeMirror, location*/
-(function (doc, lint, cm) {
+/*global jQuery, JSLINT, CodeMirror, location*/
+(function ($, lint, cm) {
     'use strict';
 
-    var editor,
+    var editor, legendHTML,
         editorChanged = false,
         scopeMode = {
             'name': 'scope',
@@ -19,7 +19,7 @@
         };
 
     //set up code editor
-    editor = cm.fromTextArea(doc.getElementById('editor'), { 'theme': 'ambiance', 'mode': scopeMode });
+    editor = cm.fromTextArea($('#editor')[0], { 'theme': 'ambiance', 'mode': scopeMode });
 
     //lint the code in the editor
     function lintCode() {
@@ -34,11 +34,14 @@
     //Shouldn't need the code below this line, it's just for this demo
 
     function loadSample(id) {
-        editor.setValue(doc.getElementById(id.substr(id.lastIndexOf('#') + 1)).innerHTML);
+        var sample = $('#'+id.substr(id.lastIndexOf('#') + 1));
+        editor.setValue(sample.text());
     }
 
     //load the default code sample
-    loadSample(location.hash || 'minimonad');
+    $(function() {
+        loadSample(location.hash || 'minimonad');
+    });
 
     //support changing modes
     function selectMode(mode) {
@@ -50,22 +53,29 @@
         }
     }
 
-    //bind mode change event handlers
-    doc.getElementById('grownup').onclick = function () {
-        selectMode(this.value);
-    };
-    doc.getElementById('n00b').onclick = function () {
-        selectMode(this.value);
-    };
+    //bind mode change event handler
+    $("#toggleMode").on("click", "button", function(e){
+        selectMode($(this).data("mode"));
+    });
 
-    //bind code sample handlers
-    doc.getElementById('mini').onclick = function () {
+    //bind code sample change handler
+    $("#samples").on("click", "a", function(){
         loadSample(this.href);
-    };
-    doc.getElementById('full').onclick = function () {
-        loadSample(this.href);
-    };
-    doc.getElementById('eight').onclick = function () {
-        loadSample(this.href);
-    };
-}(document, JSLINT, CodeMirror));
+    });
+
+    //setup legend popover
+    legendHTML = ['<span class="legend">',
+        '<span class="level0">Level 0</span>',
+        '<span class="level1">Level 1</span>',
+        '<span class="level2">Level 2</span>',
+        '<span class="level3">Level 3</span>',
+        '<span class="level4">Level 4</span>',
+        '<span class="level5">Level 5</span>',
+        '<span class="level6">Level 6</span>',
+        '<span class="level7">Level 7</span>',
+        '<span class="level8">Level 8</span>',
+        '<span class="level9">Level 9</span>',
+        '</span>'];
+    $('i').popover({ html : true, content: legendHTML.join('\n') });
+
+}(jQuery, JSLINT, CodeMirror));

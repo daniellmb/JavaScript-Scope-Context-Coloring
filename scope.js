@@ -4,7 +4,7 @@ CodeMirror.defineMode('scope', function (config, parserConfig) {
 
     var levels = [], fullyParsed;
 
-    //lint the code to get the scope information
+    //request levels from parserConfig
     function getLevels() {
         //this gets called a lot so check first
         if (parserConfig.hasChanged()) {
@@ -17,28 +17,21 @@ CodeMirror.defineMode('scope', function (config, parserConfig) {
 
     return {
         startState: function () {
+            //reset state
             fullyParsed = false;
-
             return {
                 line: 0,
                 index: 0
             };
         },
         token: function (stream, state) {
-            var level, next;
+            var level;
 
             //get the latest levels
             getLevels();
 
             //check for valid levels data
             if (state.index < levels.length) {
-
-                //check stream for 'start of line'
-                if (stream.sol()) {
-                    if (!fullyParsed) {
-                        state.line += 1;
-                    }
-                }
 
                 //get the level information
                 level = levels[state.index];
@@ -52,20 +45,13 @@ CodeMirror.defineMode('scope', function (config, parserConfig) {
                 //move stream to scope change
                 stream.pos += (level.thru - level.from);
 
-                //check if this is the last line
-                if (state.index == levels.length) {
-                    fullyParsed = true;
-                }
-                else
-                {
-                    //step forward in the list
-                    state.index += 1;
-                }
+                //step forward in the list
+                state.index += 1;
 
                 //return the CSS class to apply
                 return 'level' + level.level;
             }
-            //handle race conditions
+            //do nothing
             stream.skipToEnd();
             return null;
         }
