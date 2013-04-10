@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>JavaScript Scope Context Coloring</title>
-    <meta name="description" content="">
+    <meta name="description" content="A JavaScript experiment in switching between syntax highlighting and scope context coloring.">
     <meta name="author" content="Daniel Lamb">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CodeMirror/lib/codemirror.css">
@@ -26,14 +26,14 @@
             <i class="icon-question-sign" data-toggle="popover" data-trigger="hover" data-placement="top" data-title="Scope Color Legend"></i>
             <form>
                 <div class="btn-group samples">
-                    <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">Code Samples<span class="caret"></span></button>
+                    <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown">Code Samples<span class="caret"></span></button>
                     <ul class="dropdown-menu" id="samples">
                         <li><a href="#minimonad" id="mini">Mini Monad</a></li>
                         <li><a href="#fullmonad" id="full">Full Monad</a></li>
                         <li><a href="#level10" id="ten">10 Levels</a></li>
                     </ul>
                 </div>
-                <textarea id="editor"></textarea>
+                <div id="editor"></div>
             </form>
             <div id="push"></div>
         </div>
@@ -51,11 +51,29 @@
     <!-- experiment -->
     <script src="../scope.js"></script>
 
-
     <!-- demo page specific code (you need stuff below this line) -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <script src="demo.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script>
+    (function ($) {
+        'use strict';
+        //setup scope color legend popover
+        var legendHTML = ['<span class="legend">',
+            '<span class="level0">Level 0</span>',
+            '<span class="level1">Level 1</span>',
+            '<span class="level2">Level 2</span>',
+            '<span class="level3">Level 3</span>',
+            '<span class="level4">Level 4</span>',
+            '<span class="level5">Level 5</span>',
+            '<span class="level6">Level 6</span>',
+            '<span class="level7">Level 7</span>',
+            '<span class="level8">Level 8</span>',
+            '<span class="level9">Level 9</span>',
+            '</span>'];
+        $('i').popover({ html : true, content: legendHTML.join('\n') });
+    }(jQuery));
+    </script>
 
 <!-- scope coloring samples -->
 <script id="minimonad" type="text/html">function MONAD() {

@@ -324,19 +324,36 @@
         ]
     );
 
-    //GitHub Issue #4 (bug in JSLINT)
-    testLevels("should properly parse hoisted variables",
+    testLevels("should handle blank source code lines",
         [   //input
-            "var sayHi = function() {",
-            "    console.log(late);",
-            "};",
-            "var late = 'hi';"
+            "function MONAD() {",
+            "",//empty line
+            "",//empty line
+            "    return function unit(value) {",
+            "",//empty line
+            "        var monad = Object.create(null);",
+            "        monad.bind = function (func) {",
+            "            return func(value);",
+            "        };",
+            "        return monad;",
+            "",//empty line
+            "    };",
+            "}"
         ],
         [   //expected output
-            "[level0 var sayHi =] [level1 function() {]",
-            "    [level1 console.log(][level0 late][level1 );]",
-            "[level1 };]",
-            "[level0 var late = 'hi';]"
+            "[level1 function] [level0 MONAD][level1 () {]",
+            "",//empty line
+            "",//empty line
+            "    [level1 return] [level2 function unit(value) {]",
+            "",//empty line
+            "        [level2 var monad =] [level0 Object][level2 .create(null);]",
+            "        [level2 monad.bind =] [level3 function (func) {]",
+            "            [level3 return func(][level2 value][level3 );]",
+            "        [level3 };]",
+            "        [level2 return monad;]",
+            "",//empty line
+            "    [level2 };]",
+            "[level1 }]"
         ]
     );
 
@@ -351,6 +368,58 @@
             "[level0 var foo =] [level1 function bar() {]",
             "    [level1 console.log('baz');]",
             "[level1 };]"
+        ]
+    );
+
+    //GitHub Issue #6 (bug FIXED in editor)
+    testLevels("should handle gaps in level lines",
+        [   //input
+            "function MONAD() {",
+            "    //ignore me",
+            "    return function unit(value) {",
+            "        /*",
+            "            ignore me",
+            "        */",
+            "        var monad = Object.create(null);",
+            "        monad.bind = function (func) {",
+            "            return func(value);",
+            "        };",
+            "        return monad;",
+            "    };",
+            "}"
+        ],
+        [   //expected output
+            "[level1 function] [level0 MONAD][level1 () {]",
+            "    //ignore me",
+            "    [level1 return] [level2 function unit(value) {]",
+            "        /*",
+            "            ignore me",
+            "        */",
+            "        [level2 var monad =] [level0 Object][level2 .create(null);]",
+            "        [level2 monad.bind =] [level3 function (func) {]",
+            "            [level3 return func(][level2 value][level3 );]",
+            "        [level3 };]",
+            "        [level2 return monad;]",
+            "    [level2 };]",
+            "[level1 }]"
+        ]
+    );
+
+//OPEN ISSUES
+
+    //GitHub Issue #4 (bug in JSLINT)
+    testLevels("should properly parse hoisted variables",
+        [   //input
+            "var sayHi = function() {",
+            "    console.log(late);",
+            "};",
+            "var late = 'hi';"
+        ],
+        [   //expected output
+            "[level0 var sayHi =] [level1 function() {]",
+            "    [level1 console.log(][level0 late][level1 );]",
+            "[level1 };]",
+            "[level0 var late = 'hi';]"
         ]
     );
 
