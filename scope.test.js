@@ -407,22 +407,6 @@
 
 //OPEN ISSUES
 
-    //GitHub Issue #4 (bug in JSLINT)
-    testLevels("should properly parse hoisted variables",
-        [   //input
-            "var sayHi = function() {",
-            "    console.log(late);",
-            "};",
-            "var late = 'hi';"
-        ],
-        [   //expected output
-            "[level0 var sayHi =] [level1 function() {]",
-            "    [level1 console.log(][level0 late][level1 );]",
-            "[level1 };]",
-            "[level0 var late = 'hi';]"
-        ]
-    );
-
     // GitHub Issue #2 (bug in JSLINT)
     testLevels("should match variables more than once per scope",
         [   //input
