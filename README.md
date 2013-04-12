@@ -6,4 +6,8 @@ A JavaScript experiment in switching between syntax highlighting and scope color
 
 It's [not perfect yet](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/test/), pull requests welcome! :)
 
-[![JavaScript Scope Context Coloring](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/ScreenShot.png?v=2 "JavaScript Scope Context Coloring")](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/scope-coloring.html#fullmonad)
+###Switch between Syntax Highlighting and Scope Context Coloring
+[![JavaScript Scope Context Coloring Switching](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/color-switching.gif "JavaScript Scope Context Coloring Switching")](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/scope-coloring.html#fullmonad)
+
+###Real-time Scope Context Coloring
+[![JavaScript Scope Context Coloring](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/realtime-color.gif "Real-time JavaScript Scope Context Coloring")](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/scope-coloring.html#level10)
