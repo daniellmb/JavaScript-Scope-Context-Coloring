@@ -30,9 +30,6 @@ form { position: relative; }
 .CodeMirror { height: auto; }
 .CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; }
 
-/* modes */
-label { cursor: pointer; }
-
 /* scope color legend */
 .legend span { font-size: 12px; border: solid 1px #000; padding: 2px; }
 .level0 { background-color: #ffffff; }

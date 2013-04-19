@@ -40,7 +40,7 @@
 
     //load the default code sample
     $(function() {
-        loadSample(location.hash || 'minimonad');
+        loadSample(location.hash || 'depinject');
     });
 
     //support changing modes

@@ -28,9 +28,9 @@
                 <div class="btn-group samples">
                     <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown">Code Samples<span class="caret"></span></button>
                     <ul class="dropdown-menu" id="samples">
-                        <li><a href="#minimonad" id="mini">Mini Monad</a></li>
-                        <li><a href="#fullmonad" id="full">Full Monad</a></li>
-                        <li><a href="#level10" id="ten">10 Levels</a></li>
+                        <li><a href="#depinject">Dep. Inject</a></li>
+                        <li><a href="#fullmonad">Full Monad</a></li>
+                        <li><a href="#level10">10 Levels</a></li>
                     </ul>
                 </div>
                 <div id="editor"></div>
@@ -76,16 +76,31 @@
     </script>
 
 <!-- scope coloring samples -->
-<script id="minimonad" type="text/html">function MONAD() {
+<script id="depinject" type="text/html">/*
+Dependency injection in a functional style using JavaScript closures.
+Run at http://jsfiddle.net/daniellmb/fkdkJ
+*/
+(function (window) {
     'use strict';
-    return function unit(value) {
-        var monad = Object.create(null);
-        monad.bind = function (func) {
-            return func(value);
+
+    var factories, greet;
+
+    function createFactories(display) {
+        return {
+            createGreet: function (salutation) {
+                return function (thing) {
+                    display(salutation + thing + '!');
+                };
+            }
         };
-        return monad;
-    };
-}</script>
+    }
+
+    factories = createFactories(window.alert);
+    greet = factories.createGreet('Hello ');
+
+    greet('World');
+
+}(this));</script>
 <script id="fullmonad" type="text/html">function MONAD(modifier) {
     'use strict';
 
