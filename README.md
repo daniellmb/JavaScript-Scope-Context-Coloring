@@ -1,4 +1,4 @@
-#JavaScript Scope Context Coloring
+#JavaScript Scope Context Coloring for the challenge
 
 A JavaScript experiment in switching between syntax highlighting and scope colorizing, built on JSLint and CodeMirror and inspired by Douglas Crockford.
 
@@ -9,5 +9,5 @@ It's [not perfect yet](http://daniellmb.github.io/JavaScript-Scope-Context-Color
 ###Switch between Syntax Highlighting and Scope Context Coloring
 [![JavaScript Scope Context Coloring Switching](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/color-switching.gif "JavaScript Scope Context Coloring Switching")](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/scope-coloring.html#fullmonad)
 
-###Real-time Scope Context Coloring
+###Real-time Scope Context Coloring.
 [![JavaScript Scope Context Coloring](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/realtime-color.gif "Real-time JavaScript Scope Context Coloring")](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/scope-coloring.html#level10)
