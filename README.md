@@ -1,6 +1,6 @@
-#JavaScript Scope Context Coloring
+#JavaScript Scope Context Coloring..
 
-A JavaScript experiment in switching between syntax highlighting and scope colorizing, built on JSLint and CodeMirror and inspired by Douglas Crockford.
+A JavaScript Experiment in Switching Between Syntax Highlighting and Scope Colorizing, Built on JSLint and CodeMirror and inspired by Douglas Crockford.
 
 ##[Check out the Live Examples](http://daniellmb.github.io/JavaScript-Scope-Context-Coloring/example/scope-coloring.html#fullmonad)
 
