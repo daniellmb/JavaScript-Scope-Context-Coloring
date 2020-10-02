@@ -1,4 +1,5 @@
 /*global CodeMirror, JSLINT, test*/
+/*must include more explaination*/
 (function() {
     'use strict';
 
